@@ -36,3 +36,5 @@ class PhotoPairViewSet(viewsets.ModelViewSet):
 class VoteViewSet(viewsets.ModelViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    permission_classes = [IsAuthenticated]
+    
