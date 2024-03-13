@@ -9,7 +9,7 @@ class PixelCoin(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username + ' has ' + str(self.credit) + ' credits'
     
 class PhotoPair(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
