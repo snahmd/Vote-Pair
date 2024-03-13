@@ -24,6 +24,10 @@ class PhotoPairViewSet(viewsets.ModelViewSet):
         credit = PixelCoin.objects.get(user=request.user).credit
         if credit < 10:
             return Response({'error': 'You do not have enough credits to create a new photo pair'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        pixel_coin = PixelCoin.objects.get(user=request.user)
+        pixel_coin.credit -= 10
+        pixel_coin.save()
         ####
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
