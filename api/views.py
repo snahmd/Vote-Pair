@@ -4,6 +4,7 @@ from .models import PixelCoin, PhotoPair, Vote
 from .serializers import PixelCoinSerializer, PhotoPairSerializer, VoteSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -58,3 +59,15 @@ class VoteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class FlowView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        # get user's voted photo pairs
+        voted_photo_pairs = Vote.objects.filter(user=request.user).values_list('photo_pair_id', flat=True)
+        # get all photo pairs except the ones that user has voted
+        photo_pairs = PhotoPair.objects.exclude(id__in=voted_photo_pairs).order_by('created_date')[:10]
+        serializer = PhotoPairSerializer(photo_pairs, many=True)
+        return Response(serializer.data)
