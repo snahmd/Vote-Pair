@@ -21,8 +21,8 @@ class PhotoPairSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'content1', 'content2', 'created_date']
 
 class VoteSerializer(serializers.ModelSerializer):  
-    user = UserSerializer()
-    photo_pair = PhotoPairSerializer()
+    user = UserSerializer(read_only=True)
+    photo_pair_id = serializers.IntegerField()
     class Meta:
         model = Vote
-        fields = ['id', 'user', 'photo_pair', 'vote', 'created_date']         
+        fields = ['id', 'user', 'photo_pair_id', 'vote', 'created_date']         

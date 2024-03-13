@@ -42,7 +42,6 @@ class VoteViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         ### Increase the credit of the user who voted by 1
-        
         user = request.user
         pixel_coin = PixelCoin.objects.get(user=user)
         pixel_coin.credit += 1
