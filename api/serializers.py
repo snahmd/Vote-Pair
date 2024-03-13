@@ -15,7 +15,7 @@ class PixelCoinSerializer(serializers.ModelSerializer):
        
 
 class PhotoPairSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
     class Meta:
         model = PhotoPair
         fields = ['id', 'user', 'content1', 'content2', 'created_date']
